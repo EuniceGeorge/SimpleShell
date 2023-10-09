@@ -15,7 +15,7 @@
 
 /*prototype for the functions*/
 void display_prompt();
-void execute_command(const char *command, char *const arguments[]);
+void execute_command(const char *command);
 void print_environment(void);
 char *custom_getline(void);
 int set_environment_variable(const char *variable, const char *value);
@@ -35,7 +35,5 @@ typedef struct Alias
 } Alias;
 
 /*string operations*/
-
-
 
 #endif
