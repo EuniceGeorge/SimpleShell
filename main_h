@@ -1,0 +1,50 @@
+#ifndef main_h
+#define main_h
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+
+#define MAX_COMMAND_LENGTH 100
+#define MAX_ARGS 10
+#define READ_SIZE 1024
+
+typedef struct
+{
+        char *name;
+        char *value;
+} Alias;
+
+Alias aliases[MAX_ALIASES];
+
+/* Prototype for the functions */
+
+void displayPrompt(void);
+void readCommand(char *command);
+void executeCommand(const char *command);
+void executeCommand(char **args);
+void parseCommand(char *command, char **args);
+int isExitCommand(char *command);
+int isEnvCommand(char *command);
+char *_getline(void);
+char *readBuffer(void);
+void appendToLine(char **line, size_t *line_size,
+                char *buffer, size_t buffer_index);
+char *reallocLine(char *line, size_t size);
+void nullTerminateLine(char **line, size_t line_size);
+void shell_exit(char *args[]);
+int shell_setenv(char *args[]);
+int shell_unsetenv(char *args[]);
+int shell_cd(char *args[]);
+void tokenize_command(char *command, char *command_tokens[]);
+void execute_command(char *command_tokens[]);
+void shell_execute_commands(char *commands[]);
+void shell_execute_logical(char *commands[]);
+void print_aliases(void);
+Alias *find_alias(char *name);
+int add_alias(char *name, char *value);
+int shell_alias(char *args[]);
+
+#endif /*main_h*/
