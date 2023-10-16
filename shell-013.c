@@ -1,23 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define MAX_ALIASES 10
-
-typedef struct
-{
-	char *name;
-	char *value;
-} Alias;
-
-Alias aliases[MAX_ALIASES];
-
-int alias_count = 0;
+#include "main.h"
 
 /**
  * print_aliases - Print all defined aliases
  */
-void print_aliases(void)
+void print_aliases(Alias *aliases, int alias_count)
 {
 	for (int i = 0; i < alias_count; i++)
 	{
@@ -27,10 +13,12 @@ void print_aliases(void)
 
 /**
  * find_alias - Find an alias by name
+ * @aliases: Array of aliases
+ * @alias_count: Number of aliases in the array
  * @name: The name of the alias to find
  * Return: Pointer to the Alias structure if found, NULL otherwise
  */
-Alias *find_alias(char *name)
+Alias *find_alias(Alias *aliases, int alias_count, char *name)
 {
 	for (int i = 0; i < alias_count; i++)
 	{
@@ -44,13 +32,15 @@ Alias *find_alias(char *name)
 
 /**
  * add_alias - Add or update an alias
+ * @aliases: Array of aliases
+ * @alias_count: Number of aliases in the array
  * @name: The name of the alias
  * @value: The value of the alias
  * Return: 0 on success, -1 on failure
  */
-int add_alias(char *name, char *value)
+int add_alias(Alias *aliases, int *alias_count, char *name, char *value)
 {
-	Alias *existing_alias = find_alias(name);
+	Alias *existing_alias = find_alias(aliases, *alias_count, name);
 
 	if (existing_alias != NULL)
 	{
@@ -65,35 +55,36 @@ int add_alias(char *name, char *value)
 	}
 	else
 	{
-		if (alias_count >= MAX_ALIASES)
+		if (*alias_count >= MAX_ALIASES)
 		{
 			fprintf(stderr, "Alias limit reached\n");
 			return (-1);
 		}
-		aliases[alias_count].name = strdup(name);
-		aliases[alias_count].value = strdup(value);
-
-		if (aliases[alias_count].name == NULL ||
-				aliases[alias_count].value == NULL)
+		aliases[*alias_count].name = strdup(name);
+		aliases[*alias_count].value = strdup(value);
+		if (aliases[*alias_count].name == NULL ||
+				aliases[*alias_count].value == NULL)
 		{
 			perror("strdup");
 			return (-1);
 		}
-		alias_count++;
+		(*alias_count)++;
 	}
 	return (0);
 }
 
 /**
  * shell_alias - Builtin alias command
+ * @aliases: Array of aliases
+ * @alias_count: Number of aliases in the array
  * @args: The arguments for the alias command
  * Return: 0 on success, -1 on failure
  */
-int shell_alias(char *args[])
+int shell_alias(Alias *aliases, int alias_count, char *args[])
 {
 	if (args[1] == NULL)
 	{
-		print_aliases();
+		print_aliases(aliases, alias_count);
 		return (0);
 	}
 	for (int i = 1; args[i] != NULL; i++)
@@ -106,14 +97,15 @@ int shell_alias(char *args[])
 			*value = '\0';
 			value++;
 
-			if (add_alias(name, value) == -1)
+			if (add_alias(aliases, &alias_count, name,
+						value) == -1)
 			{
 				return (-1);
 			}
 		}
 		else
 		{
-			Alias *alias = find_alias(name);
+			Alias *alias = find_alias(aliases, alias_count, name);
 
 			if (alias != NULL)
 			{

@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-#define MAX_COMMANDS 10
+#include "main.h"
 
 /**
  * tokenize_command - Tokenize a command and store tokens in an array
@@ -54,11 +48,7 @@ void execute_command(char *command_tokens[])
 
 		if (WIFEXITED(status))
 		{
-			printf("Command exited with status %d\n", WEXITSTATUS(status));
-		}
-		else
-		{
-			printf("Command terminated abnormally\n");
+			printf("%d\n", WEXITSTATUS(status));
 		}
 	}
 }
@@ -91,7 +81,7 @@ void shell_execute_logical(char *commands[])
 		}
 		else if (strcmp(commands[i], "||") == 0)
 		{
-			and_operator = 0; // Set logical OR
+			and_operator = 0;
 		}
 		i++;
 	}

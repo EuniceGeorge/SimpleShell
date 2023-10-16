@@ -1,38 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-#define MAX_COMMAND_LENGTH 100
-
-void displayPrompt(void);
-void readCommand(char *command);
-void executeCommand(const char *command);
-
-/**
- * main - Simple shell program
- *
- * Return: Always 0 on success
- */
-int main(void)
-{
-	char command[MAX_COMMAND_LENGTH];
-
-	while (1)
-	{
-		displayPrompt();
-		readCommand(command);
-
-		if (command[0] == '\0')
-		{
-			printf("\n");
-			break;
-		}
-		executeCommand(command);
-	}
-	return (0);
-}
+#include "main.h"
 
 /**
  * displayPrompt - Display the shell prompt
@@ -73,10 +39,13 @@ void executeCommand(const char *command)
 	}
 	else if (pid == 0)
 	{
-		execlp(command, command, (char *)NULL);
+		char *args[] = {command, NULL};
 
-		perror("$ ");
-		exit(EXIT_FAILURE);
+		if (execve(command, args, NULL) == -1)
+		{
+			perror(command);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
@@ -86,12 +55,7 @@ void executeCommand(const char *command)
 
 		if (WIFEXITED(status))
 		{
-			printf("\n");
-		}
-		else
-		{
-			printf("\n");
+			printf("%d\n", WIFEXITED(status));
 		}
 	}
 }
-

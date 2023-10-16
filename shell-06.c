@@ -1,15 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-#define READ_SIZE 1024
-
-char *_getline(void);
-char *readBuffer(void);
-void appendToLine(char **line, size_t *line_size,
-		char *buffer, size_t buffer_index);
-char *reallocLine(char *line, size_t size);
-void nullTerminateLine(char **line, size_t line_size);
+#include "main.h"
 
 /**
  * _getline - Custom getline function
