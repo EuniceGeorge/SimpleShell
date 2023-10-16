@@ -46,5 +46,7 @@ void print_aliases(void);
 Alias *find_alias(char *name);
 int add_alias(char *name, char *value);
 int shell_alias(char *args[]);
+void process_variables(char *command, int status, pid_t pid,
+		char *processed_command);
 
 #endif /*main_h*/
