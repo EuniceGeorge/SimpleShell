@@ -1,59 +1,6 @@
 #include "main.h"
 
 /**
- * tokenize_command - Tokenize a command and store tokens in an array
- * @command: The command to tokenize
- * @command_tokens: Array to store command tokens
- */
-void tokenize_command(char *command, char *command_tokens[])
-{
-	char *token = strtok(command, " ");
-	int j = 0;
-
-	while (token != NULL)
-	{
-		command_tokens[j++] = token;
-		token = strtok(NULL, " ");
-	}
-	command_tokens[j] = NULL;
-}
-
-/**
- * execute_command - Execute a single command
- * @command_tokens: Array of command tokens
- */
-void execute_command(char *command_tokens[])
-{
-	pid_t pid;
-	int status;
-
-	pid = fork();
-
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		if (execve(command_tokens[0], command_tokens, environ) == -1)
-		{
-			perror("execve");
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-
-		if (WIFEXITED(status))
-		{
-			printf("%d\n", WEXITSTATUS(status));
-		}
-	}
-}
-
-/**
  * shell_execute_logical - Execute commands with logical operators && and ||
  * @commands: Array of command strings
  */

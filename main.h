@@ -10,6 +10,9 @@
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGS 10
 #define READ_SIZE 1024
+#define MAX_COMMANDS 100
+#define MAX_ALIASES 50
+
 
 extern char **environ;
 
@@ -25,15 +28,13 @@ typedef struct
 
 void displayPrompt(void);
 void readCommand(char *command);
-void executeCommand(const char *command);
-void executeCommand(char **args);
+void executeCommand(const char **args);
 void parseCommand(char *command, char **args);
 int isExitCommand(char *command);
 int isEnvCommand(char *command);
 char *_getline(void);
 char *readBuffer(void);
-void appendToLine(char **line, size_t *line_size,
-                char *buffer, size_t buffer_index);
+void appendToLine(char **line, size_t *line_size, char *buffer, size_t buffer_index);
 char *reallocLine(char *line, size_t size);
 void nullTerminateLine(char **line, size_t line_size);
 void shell_exit(char *args[]);
@@ -48,8 +49,7 @@ void print_aliases(Alias *aliases, int alias_count);
 Alias *find_alias(Alias *aliases, int alias_count, char *name);
 int add_alias(Alias *aliases, int *alias_count, char *name, char *value);
 int shell_alias(Alias *aliases, int alias_count, char *args[]);
-void process_variables(char *command, int status, pid_t pid,
-		char *processed_command);
+void process_variables(char *command, int status, pid_t pid, char *processed_command);
 void remove_comments(char *command, char *processed_command);
 void process_file(char *filename);
 

@@ -28,7 +28,7 @@ void readCommand(char *command)
  * executeCommand - Execute the given command
  * @command: The command to execute
  */
-void executeCommand(const char *command)
+void executeCommand(const char **args)
 {
 	pid_t pid = fork();
 
@@ -39,11 +39,10 @@ void executeCommand(const char *command)
 	}
 	else if (pid == 0)
 	{
-		char *args[] = {command, NULL};
 
-		if (execve(command, args, NULL) == -1)
+		if (execve(args[0], (char *const *)args, NULL) == -1)
 		{
-			perror(command);
+			perror(args[0]);
 			exit(EXIT_FAILURE);
 		}
 	}

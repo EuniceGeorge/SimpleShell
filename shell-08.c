@@ -14,8 +14,8 @@ void shell_exit(char *args[])
 
 		if (status == 0 && args[1][0] != '0')
 		{
-			fprintf(stderr, "shell: exit: %s: numeric argument
-					required\n", args[1]);
+			fprintf(stderr, "shell: exit: %s: numeric argument required\n",
+					args[1]);
 			exit(EXIT_FAILURE);
 		}
 	}
