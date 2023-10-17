@@ -52,5 +52,9 @@ int shell_alias(Alias *aliases, int alias_count, char *args[]);
 void process_variables(char *command, int status, pid_t pid, char *processed_command);
 void remove_comments(char *command, char *processed_command);
 void process_file(char *filename);
+void tokenizePath(const char *path, char *directories[]);
+char *constructCommandPath(const char *directory, const char *command);
+void searchAndExecuteCommand(const char *command, char *directories[], char **env);
+int exeCommand(const char *command, char **env);
 
 #endif /*main_h*/

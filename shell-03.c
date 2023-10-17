@@ -64,12 +64,12 @@ void searchAndExecuteCommand(const char *command, char *directories[],
 }
 
 /**
- * executeCommand - Executes a command using execve after searching in PATH.
+ * exeCommand - Executes a command using execve after searching in PATH.
  * @command: The command to be executed.
  * @env: The environment variables.
  * Return: The exit status of the command.
  */
-int executeCommand(const char *command, char **env)
+int exeCommand(const char *command, char **env)
 {
 	pid_t child_pid;
 	int status;
