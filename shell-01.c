@@ -26,7 +26,7 @@ void readCommand(char *command)
 
 /**
  * executeCommand - Execute the given command
- * @command: The command to execute
+ * @args: A pointer to a pointer
  */
 void executeCommand(const char **args)
 {

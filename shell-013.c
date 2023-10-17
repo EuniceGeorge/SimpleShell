@@ -2,6 +2,8 @@
 
 /**
  * print_aliases - Print all defined aliases
+ * @aliases: Array of aliases
+ * @alias_count: Number of aliases in the array
  */
 void print_aliases(Alias *aliases, int alias_count)
 {
