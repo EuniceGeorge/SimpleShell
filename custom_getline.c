@@ -6,16 +6,16 @@
  */
 char *custom_getline(void)
 {
-    static char buffer[BUFFER_SIZE];
-    static size_t buffer_index = 0;
-    static ssize_t chars_read = 0;
-    char *line;
-    char *temp;
-    size_t line_index;
-
-    if (buffer_index >= chars_read || buffer_index == 0)
-    {
-        chars_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+	static char buffer[BUFFER_SIZE];
+	static size_t buffer_index = 0;
+	static ssize_t chars_read = 0;
+	char *line;
+	char *temp;
+	size_t line_index;
+	
+	if (buffer_index >= chars_read || buffer_index == 0)
+	{
+		chars_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 
         if (chars_read <= 0)
         {

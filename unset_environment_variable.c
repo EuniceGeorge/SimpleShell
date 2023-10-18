@@ -7,10 +7,11 @@
  */
 int unset_environment_variable(const char *variable)
 {
-    if (unsetenv(variable) != 0)
-    {
-        fprintf(stderr, "Error: Unable to unset environment variable '%s'\n", variable);
-        return -1;
-    }
-    return 0;
+	if (unsetenv(variable) != 0)
+	{
+		fprintf(stderr, "Error: Unable to unset environment variable
+				'%s'\n", variable);
+		return (-1);
+	}
+	return (0);
 }
