@@ -26,6 +26,9 @@ void alias_command(char *const arguments[]);
 void replace_variables(const char *input, char *output);
 void remove_comments(const char *input, char *output);
 
+/*prototype for string functions*/
+int _strlen(char *s);
+int _strcmp(char *s1, char *s2);
 
 typedef struct Alias
 {
