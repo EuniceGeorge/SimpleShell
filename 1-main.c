@@ -1,41 +1,41 @@
 #include "main.h"
 
 /**
-* main - Simple shell program
-*
-* Return: Always 0 on success
-*/
-int main(void)
+ * main - Entry point for the shell program
+ * @argc: Argument count
+ * @argv: Argument vector
+ * @envp: Environment variables
+ * Return: Exit status
+ */
+int main(__attribute__((unused)) int argc,
+		__attribute__((unused)) char *argv[],
+		__attribute__((unused)) char *envp[])
 {
-	char command[MAX_COMMAND_LENGTH];
-	char *args[MAX_ARGS];
-
 	while (1)
 	{
+		char *command;
+		char *commands[MAX_COMMANDS];
+		
 		displayPrompt();
-		readCommand(command);
-
-		if (command[0] == '\0')
+		
+		command = _getline();
+		
+		if (command == NULL)
 		{
-			printf("\n");
+			perror("_getline");
+			continue;
+		}
+		if (isExitCommand(command))
+		{
+			free(command);
 			break;
 		}
-		parseCommand(command, args);
-
-		if (isExitCommand(args[0]))
-		{
-			break;
-		}
-		else if (isEnvCommand(args[0]))
-		{
-			char **env = environ;
-
-			while (*env)
-			{
-				printf("%s\n", *env);
-				env++;
-			}
-		}
+		
+		parseCommand(command, commands);
+		
+		executeCommand((const char **)commands);
+		
+		free(command);
 	}
 	return (0);
 }

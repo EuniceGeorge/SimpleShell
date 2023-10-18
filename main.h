@@ -56,5 +56,6 @@ void tokenizePath(const char *path, char *directories[]);
 char *constructCommandPath(const char *directory, const char *command);
 void searchAndExecuteCommand(const char *command, char *directories[], char **env);
 int exeCommand(const char *command, char **env);
+int main(__attribute__((unused)) int argc, __attribute__((unused)) char *argv[], __attribute__((unused)) char *envp[])
 
 #endif /*main_h*/
