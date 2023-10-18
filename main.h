@@ -10,6 +10,8 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
+extern char **environ;
+
 #define MAX_COMMAND_LENGTH 100
 #define BUFFER_SIZE 1024
 

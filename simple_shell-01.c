@@ -24,34 +24,34 @@ int main(void)
 
 	while (1)
 	{
-		printf("$ ");  /* Display prompt */
+		printf("$ ");
 		read_chars = getline(&token, &read_chars, stdin);
 		if (read_chars == -1)
 		{
 			printf("\n");
 			free(token);
-			exit(EXIT_SUCCESS);  /* Check for end of file (Ctrl+D) */
+			exit(EXIT_SUCCESS);
 		}
-		token[strlen(token) - 1] = '\0';  /* Remove newline character */
-		pid_t child_pid = fork();  /* Fork to create a child process */
+		token[strlen(token) - 1] = '\0';
+		pid_t child_pid = fork();
 
 		if (child_pid == -1)
 		{
 			perror("Error forking");
 			exit(EXIT_FAILURE);
 		}
-		if (child_pid == 0)  /* Child process */
+		if (child_pid == 0)
 		{
-			if (execve(token, NULL, NULL) == -1)  /* Execute the command using execve */
+			if (execve(token, NULL, NULL) == -1)
 			{
 				fprintf(stderr, "%s: command not found\n", token);
 				free(token);
 				exit(EXIT_FAILURE);
 			}
 		}
-		else  /* Parent process */
+		else
 		{
-			wait(NULL);  /* Wait for the child to finish */
+			wait(NULL);
 		}
 	}
 	return (0);
