@@ -36,10 +36,6 @@ int main(void)
 				env++;
 			}
 		}
-		else
-		{
-			executeCommand(args);
-		}
 	}
 	return (0);
 }

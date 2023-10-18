@@ -90,7 +90,7 @@ int exeCommand(const char *command, char **env)
 		char *path = getenv("PATH");
 		char *directories[1024];
 	}
-	if (! path)
+	if (!path)
 	{
 		return (-1);
 

@@ -7,7 +7,9 @@
  */
 void print_aliases(Alias *aliases, int alias_count)
 {
-	for (int i = 0; i < alias_count; i++)
+	int i;
+
+	for (i = 0; i < alias_count; i++)
 	{
 		printf("%s='%s'\n", aliases[i].name, aliases[i].value);
 	}
@@ -22,7 +24,9 @@ void print_aliases(Alias *aliases, int alias_count)
  */
 Alias *find_alias(Alias *aliases, int alias_count, char *name)
 {
-	for (int i = 0; i < alias_count; i++)
+	int i;
+
+	for (i = 0; i < alias_count; i++)
 	{
 		if (strcmp(aliases[i].name, name) == 0)
 		{
@@ -84,12 +88,14 @@ int add_alias(Alias *aliases, int *alias_count, char *name, char *value)
  */
 int shell_alias(Alias *aliases, int alias_count, char *args[])
 {
+	int i;
+
 	if (args[1] == NULL)
 	{
 		print_aliases(aliases, alias_count);
 		return (0);
 	}
-	for (int i = 1; args[i] != NULL; i++)
+	for (i = 1; args[i] != NULL; i++)
 	{
 		char *name = args[i];
 		char *value = strchr(name, '=');

@@ -7,15 +7,14 @@
 void process_file(char *filename)
 {
 	FILE *file = fopen(filename, "r");
+	char command[MAX_COMMAND_LENGTH];
+	char *command_tokens[MAX_COMMANDS];
 
 	if (file == NULL)
 	{
 		perror("fopen");
 		exit(EXIT_FAILURE);
 	}
-	char command[MAX_COMMAND_LENGTH];
-	char *command_tokens[MAX_COMMANDS];
-
 	while (fgets(command, sizeof(command), file) != NULL)
 	{
 		size_t len = strlen(command);
