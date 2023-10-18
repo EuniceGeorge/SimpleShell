@@ -52,7 +52,7 @@ void searchAndExecuteCommand(const char *command, char *directories[],
 	{
 		char *command_path = constructCommandPath(directories[i], command);
 
-		if (execve(command_path, (char *[])(command, NULL), env) != -1)
+		if (execve(command_path, (char *[]){command, NULL}, env) != -1)
 		{
 			free(command_path);
 			exit(0);
@@ -90,7 +90,7 @@ int exeCommand(const char *command, char **env)
 		char *path = getenv("PATH");
 		char *directories[1024];
 	}
-	if (!path)
+	if (! path)
 	{
 		return (-1);
 
