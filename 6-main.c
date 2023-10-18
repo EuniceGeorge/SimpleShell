@@ -1,23 +1,23 @@
 #include "main.h"
 
 /**
-* main - Simple shell program
-*
-* Return: Always 0 on success
-*/
+ * main - Test getline function.
+ *
+ * Return: 0 on success.
+ */
 int main(void)
 {
-	char *line = NULL;
-	size_t size = 0;
-	ssize_t charsRead;
-	
-	while ((charsRead = my_getline(&line, &size)) != -1)
+	char *line;
+
+	printf("Enter some text:\n");
+
+	line = _getline();
+
+	while (line != NULL)
 	{
-		if (charsRead > 1)
-		{
-			printf("Line read: %s", line);
-		}
+		printf("%s", line);
+		free(line);
+		line = _getline();
 	}
-	free(line);
 	return (0);
 }

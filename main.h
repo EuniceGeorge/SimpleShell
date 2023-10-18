@@ -56,6 +56,5 @@ void tokenizePath(const char *path, char *directories[]);
 char *constructCommandPath(const char *directory, const char *command);
 void searchAndExecuteCommand(const char *command, char *directories[], char **env);
 int exeCommand(const char *command, char **env);
-ssize_t my_getline(char **line, size_t *size);
 
 #endif /*main_h*/
