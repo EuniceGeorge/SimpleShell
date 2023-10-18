@@ -30,7 +30,14 @@ void readCommand(char *command)
  */
 void executeCommand(const char **args)
 {
-	pid_t pid = fork();
+	pid_t pid;
+
+	if (access(args[0], X_OK) == -1)
+	{
+		fprintf(stderr, "%s: command not found\n", args[0]);
+		return;
+	}
+	pid = fork();
 
 	if (pid == -1)
 	{
