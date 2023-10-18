@@ -1,23 +1,5 @@
 #include "main.h"
 /**
- * _strlen - function that prints length of a string
- * @r:  string whose length to be printed
- *
- * Return: int length of string
- */
-int _strlen(char *r)
-{
-	int j = 0;
-
-	if (!r)
-		return (0);
-
-	while (*r++)
-		j++;
-	return (j);
-}
-
-/**
  * _strcmp -  function that compares of two strangs.
  * @s1:  first string
  * @s2:  second string
@@ -39,4 +21,22 @@ int _strcmp(char *s1, char *s2)
 		return (0);
 	else
 		return (*s1 < *s2 ? -1 : 1);
+}
+
+/**
+ * _strlen - function that prints length of a string
+ * @r:  string whose length to be printed
+ *
+ * Return: int length of string
+ */
+int _strlen(char *r)
+{
+	int j = 0;
+
+	if (!r)
+		return (0);
+
+	while (*r++)
+		j++;
+	return (j);
 }
