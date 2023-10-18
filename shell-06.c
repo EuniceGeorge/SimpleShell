@@ -1,102 +1,73 @@
 #include "main.h"
 
 /**
- * _getline - Custom getline function
- *
- * Return: Pointer to the read line, or NULL on failure or end of file
+ * initializeBuffer - Initialize or reset the buffer variables
+ * @index: Pointer to the current index in the buffer
+ * @bytesRead: Pointer to the number of bytes read into the buffer
  */
-char *_getline(void)
+static void initializeBuffer(size_t *index, ssize_t *bytesRead)
 {
-	static char buffer[READ_SIZE];
-	static size_t buffer_index;
-	static ssize_t bytes_read;
-	size_t line_size = 0;
-	char *line = NULL;
-
-	while (1)
-	{
-		if (buffer_index == bytes_read)
-		{
-			buffer_index = 0;
-			bytes_read = read(STDIN_FILENO, buffer, READ_SIZE);
-
-			if (bytes_read == 0)
-			{
-				if (line_size == 0)
-				{
-					return (NULL);
-				}
-				break;
-			}
-			if (bytes_read == -1)
-			{
-				perror("read");
-				free(line);
-				return (NULL);
-			}
-		}
-		while (buffer_index < bytes_read && buffer[buffer_index] != '\n')
-		{
-			appendToLine(&line, &line_size, buffer, buffer_index);
-		}
-		if (buffer_index < bytes_read && buffer[buffer_index] == '\n')
-		{
-			appendToLine(&line, &line_size, buffer, buffer_index);
-			break;
-		}
-	}
-	nullTerminateLine(&line, line_size);
-	return (line);
+	*index = 0;
+	*bytesRead = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 }
 
 /**
- * appendToLine - Append a character to the line
- * @line: Pointer to the line
- * @line_size: Pointer to the size of the line
- * @buffer: Buffer containing characters
- * @buffer_index: Index of the character in the buffer
+ * resizeLine - Resize the line buffer
+ * @line: Pointer to the line buffer
+ * @size: Pointer to the size of the buffer
+ * Return: 0 on success, -1 on failure
  */
-void appendToLine(char **line, size_t *line_size, char *buffer,
-		size_t buffer_index)
+static int resizeLine(char **line, size_t *size)
 {
-	char *temp = reallocLine(*line, *line_size + 1);
-
-	if (temp == NULL)
-	{
-		perror("realloc");
-		free(*line);
-		exit(EXIT_FAILURE);
-	}
-	*line = temp;
-	(*line)[(*line_size)++] = buffer[buffer_index++];
+	*size *= 2;
+	*line = realloc(*line, *size);
+	return ((*line == NULL) ? -1 : 0);
 }
 
 /**
- * reallocLine - Reallocate memory for the line
- * @line: Pointer to the line
- * @size: New size of the line
- * Return: Pointer to the reallocated line
+ * my_getline - Read a line from standard input
+ * @line: Pointer to a buffer to store the line
+ * @size: Size of the buffer
+ * Return: Number of characters read (including newline), or -1 on failure
  */
-char *reallocLine(char *line, size_t size)
+ssize_t my_getline(char **line, size_t *size)
 {
-	return (realloc(line, size));
-}
+	static char buffer[BUFFER_SIZE];
+	static size_t index, bytesRead;
 
-/**
- * nullTerminateLine - Null-terminate the line
- * @line: Pointer to the line
- * @line_size: Size of the line
- */
-void nullTerminateLine(char **line, size_t line_size)
-{
-	char *temp = reallocLine(*line, line_size + 1);
-
-	if (temp == NULL)
+	if (index == bytesRead && (initializeBuffer(&index, &bytesRead) ||
+				bytesRead <= 0))
 	{
-		perror("realloc");
-		free(*line);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
-	*line = temp;
-	(*line)[line_size] = '\0';
+	if (*line == NULL)
+	{
+		*size = BUFFER_SIZE;
+
+		char *tempLine = malloc(*size);
+
+		if (tempLine == NULL)
+		{
+			return (-1);
+		}
+	}
+
+	ssize_t i, j;
+	char currentChar;
+
+	for (i = 0, j = index; j < bytesRead && buffer[j] != '\n'; ++i, ++j)
+	{
+		currentChar = buffer[j];
+
+		if (i >= *size - 1 && resizeLine(line, size) == -1)
+		{
+			return (-1);
+		}
+
+		(*line)[i] = currentChar;
+	}
+	(*line)[i] = '\0';
+	index = j + 1;
+
+	return (i + 1);
 }

@@ -7,12 +7,17 @@
 */
 int main(void)
 {
-	char *line;
-
-	while ((line = _getline()) != NULL)
+	char *line = NULL;
+	size_t size = 0;
+	ssize_t charsRead;
+	
+	while ((charsRead = my_getline(&line, &size)) != -1)
 	{
-		printf("Line read: %s\n", line);
-		free(line);
+		if (charsRead > 1)
+		{
+			printf("Line read: %s", line);
+		}
 	}
+	free(line);
 	return (0);
 }
