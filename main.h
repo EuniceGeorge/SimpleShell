@@ -27,6 +27,10 @@ void execute_commands(const char *command);
 void alias_command(char *const arguments[]);
 void replace_variables(const char *input, char *output);
 void remove_comments(const char *input, char *output);
+int validate_exit_status(char *arg);
+void exit_shell(void);
+int shell_exit(char **args);
+
 
 
 typedef struct Alias
