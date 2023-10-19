@@ -6,7 +6,7 @@ static char buffer[BUFFER_SIZE];
 static int offset;
 
 /**
- * _getline - Read a line from stdin into buffer.
+ * custom_getline - Read a line from stdin into buffer.
  *
  * Return: Pointer to line string on success, NULL on failure.
  */
