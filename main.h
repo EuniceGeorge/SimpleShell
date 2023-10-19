@@ -30,6 +30,8 @@ void remove_comments(const char *input, char *output);
 int validate_exit_status(char *arg);
 void exit_shell(void);
 int shell_exit(char **args);
+char **get_path_dirs(char *path);
+char *find_command(char **cmd);
 
 
 
