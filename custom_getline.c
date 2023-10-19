@@ -13,7 +13,7 @@ char *custom_getline(void)
 	char *temp;
 	size_t line_index;
 
-	if (buffer_index >= chars_read || buffer_index == 0)
+	if ((ssize_t)buffer_index >= chars_read || buffer_index == 0)
 	{
 		chars_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 
@@ -32,7 +32,7 @@ char *custom_getline(void)
 	}
 	line_index = 0;
 
-	while (buffer_index < chars_read)
+	while ((ssize_t)buffer_index < chars_read)
 	{
 		char current_char = buffer[buffer_index++];
 

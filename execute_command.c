@@ -5,7 +5,7 @@
  * @command: The command to execute
  */
 
-void execute_command(const char *command)
+void execute_command(char *command)
 {
 	char *args[BUFFER_SIZE];
 	char *token;

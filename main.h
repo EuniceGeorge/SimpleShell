@@ -17,7 +17,7 @@ extern char **environ;
 
 /*prototype for the functions*/
 void display_prompt();
-void execute_command(const char *command);
+void execute_command(char *command);
 void print_environment(void);
 char *custom_getline(void);
 int set_environment_variable(const char *variable, const char *value);

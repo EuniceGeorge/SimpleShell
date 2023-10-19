@@ -6,7 +6,9 @@
  */
 int main(void)
 {
+	char *arguments[MAX_COMMAND_LENGTH];
 	char *command, *token;
+	int i = 0;
 
 	while (1)
 	{
@@ -24,9 +26,6 @@ int main(void)
 			continue;
 		}
 		token = strtok(command, " ");
-
-		char *arguments[MAX_COMMAND_LENGTH];
-		int i = 0;
 
 		while (token != NULL)
 		{
@@ -49,7 +48,7 @@ int main(void)
 		{
 			if (access(arguments[0], X_OK) == 0)
 			{
-				execute_command(arguments[0], arguments);
+				execute_command(arguments[0]);
 			}
 			else
 			{
