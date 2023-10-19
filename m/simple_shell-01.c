@@ -18,22 +18,22 @@
  */
 int main(void)
 {
-	char buffer[BUFFER_SIZE];
-	ssize_t read_chars;
+	size_t read_chars;
 	char *token;
+	pid_t child_pid;
 
 	while (1)
 	{
 		printf("$ ");
 		read_chars = getline(&token, &read_chars, stdin);
-		if (read_chars == -1)
+		if ((int)read_chars == -1)
 		{
 			printf("\n");
 			free(token);
 			exit(EXIT_SUCCESS);
 		}
 		token[strlen(token) - 1] = '\0';
-		pid_t child_pid = fork();
+		child_pid = fork();
 
 		if (child_pid == -1)
 		{

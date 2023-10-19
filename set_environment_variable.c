@@ -10,8 +10,8 @@ int set_environment_variable(const char *variable, const char *value)
 {
 	if (setenv(variable, value, 1) != 0)
 	{
-		fprintf(stderr, "Error: Unable to set environment variable
-				'%s'\n", variable);
+		fprintf(stderr,
+				"Error: Unable to set environment variable %s\n", variable);
 		return (-1);
 	}
 	return (0);
