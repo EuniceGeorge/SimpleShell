@@ -48,4 +48,8 @@ void change_directory(const char *path);
 void execute_single_command(char *command);
 
 
+char** get_path_list();
+int get_num_paths();
+
+
 #endif
