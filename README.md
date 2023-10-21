@@ -3,4 +3,4 @@
 
 #### Authors
 1. Eseoghene ODODO [en.ododo@gmail.com] <br>
-2. Eunice Deinma-George
+2. Eunice Deinma-George [georgeunice408@gmail.com]
