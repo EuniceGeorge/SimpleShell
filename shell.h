@@ -10,8 +10,12 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#define MAX_COMMAND_LENGTH 100
-#define BUFFER_SIZE 1024
+
+
+#define MAX_INPUT_LENGTH 100
+#define BUFFER 1024
+
+extern char **environ;
 
 /* get_line function */
 void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
@@ -36,6 +40,12 @@ void print_environment(void);
 int set_environment_variable(char *variable, char *value);
 int unset_environment_variable(char *variable);
 
+/*change directory */
+void handle_cd(char **cmd);
+void change_directory(const char *path);
+
+/*handle separator and comment */
+void execute_single_command(char *command);
 
 
 #endif

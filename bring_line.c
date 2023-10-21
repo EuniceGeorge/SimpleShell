@@ -12,19 +12,19 @@ void bring_line(char **lineptr, size_t *n, char *buffer, size_t j)
 
 	if (*lineptr == NULL)
 	{
-		if  (j > BUFSIZE)
+		if  (j > BUFFER)
 			*n = j;
 
 		else
-			*n = BUFSIZE;
+			*n = BUFFER;
 		*lineptr = buffer;
 	}
 	else if (*n < j)
 	{
-		if (j > BUFSIZE)
+		if (j > BUFFER)
 			*n = j;
 		else
-			*n = BUFSIZE;
+			*n = BUFFER;
 		*lineptr = buffer;
 	}
 	else

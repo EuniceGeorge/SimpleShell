@@ -11,7 +11,7 @@ int main(void)
 	size_t input_len = 0;
 	char *path = getenv("PATH");
 	char *token;
-	char **path_list = NULL, **cmd;
+	char **path_list = NULL;
 	int num_paths = 0;
 
 	token = strtok(path, ":");
@@ -34,11 +34,22 @@ int main(void)
 		if (get_line(&input, &input_len, stdin) == -1)
 		{
 			printf("\n");
-			free(input);
+			/*free(input);*/
 			break;
 		}
 		input[strcspn(input, "\n")] = '\0';
-		if (_strcmp(input, "exit") == 0)
+
+		token = strtok(input, ";");
+		while (token != NULL)
+		{
+			execute_single_command(token);
+			token = strtok(NULL, ";");
+		}
+	}
+	return (0);
+}
+
+/*		if (_strcmp(input, "exit") == 0)
 		{
 			free(input);
 			break;
@@ -80,14 +91,17 @@ int main(void)
 			{
 				fprintf(stderr, "Usage: unsetenv VARIABLE\n");
 			}
-		} else
+		} else if (_strcmp(cmd[0], "cd") == 0)
+		{
+			handle_cd(cmd);
+		}
+	       	else
 		{
 			char *full_path = find_command_path(cmd[0], path_list, num_paths);
 
 			if (full_path)
 			{
 				execute_command(full_path, cmd);
-				/*free(full_path);*/
 			} else
 			{
 				printf("Command not found: %s\n", cmd[0]);
@@ -96,4 +110,6 @@ int main(void)
 		}
 	}
 	return (0);
-}
+}*/
+
+

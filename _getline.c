@@ -21,7 +21,7 @@ ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 		return (-1);
 	input = 0;
 
-	buffer = malloc(sizeof(char) * BUFSIZE);
+	buffer = malloc(sizeof(char) * BUFFER);
 	if (buffer == 0)
 		return (-1);
 	while (t != '\n')
@@ -37,8 +37,9 @@ ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 			input++;
 			break;
 		}
-		if (input >= BUFSIZE)
-			buffer = _realloc(buffer, input, input + 1);
+		if (input >= BUFFER)
+		/*	buffer = realloc(buffer, input, input + 1);*/
+			buffer = realloc(buffer, (input + 1) * sizeof(*buffer));
 		buffer[input] = t;
 		input++;
 	}
